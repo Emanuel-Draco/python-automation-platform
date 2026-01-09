@@ -44,14 +44,13 @@ def delete_task(task_id: str):
 
 @router.post("/tasks/{task_id}/schedule")
 def schedule_task_endpoint(task_id: str):
+    print(">>> ENTERED /schedule endpoint <<<")
+
     task = task_service.get_task(task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    schedule_task(task_id, seconds=10)
+    from app.services.scheduler import schedule_task
+    schedule_task(task_id)
 
-    return {
-        "status": "scheduled",
-        "task_id": task_id,
-        "interval_seconds": 10
-    }
+    return {"status": "scheduled"}
