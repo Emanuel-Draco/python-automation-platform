@@ -16,10 +16,11 @@ def create_task(payload: TaskCreate):
     task = task_service.create_task(
         name=payload.name,
         task_type=payload.task_type,
-        schedule=payload.schedule
+        schedule=payload.schedule,
+        filename=payload.filename,
+        interval_seconds=payload.interval_seconds,
     )
     return task.__dict__
-
 
 @router.get("/tasks", response_model=list[TaskResponse])
 def list_tasks():
